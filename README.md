@@ -14,7 +14,7 @@ This repository contains structured Kaggle work, organized into two main categor
 ## 🏆 Competitions
 
 * playground_serie_s5e10_predicting_road_accident_risk
-* playground_serie_s6e2_predicting_heart_disease
+* playground_serie_s6e2_predicting_heart_disease (2026-02)
 
 <br>
 
