@@ -1,0 +1,785 @@
+---
+title: "Job and Salary among three last years"
+format:
+  pdf:
+    documentclass: report
+    toc: true
+    number-sections: true
+    colorlinks: true
+    
+execute:
+  echo: false
+jupyter: python3
+---
+
+# 1. OVERVIEW
+
+```{python}
+import pandas as pd   # v - 23.3.1
+from tabulate import tabulate
+from IPython.display import Markdown, display, HTML
+import matplotlib.pyplot as plt
+import seaborn as sns # Plot for ANOVA
+from matplotlib.ticker import FuncFormatter # Plot for ANOVA
+import warnings
+from pandas.api.types import CategoricalDtype # Order cat var
+
+# Packages Statistics
+from statsmodels.graphics.factorplots import interaction_plot
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+from statsmodels.stats.anova import anova_lm
+import matplotlib.pyplot as plt
+from scipy import stats
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
+
+### Functions created. Eta and omega where created for ALEKS MASHANSKI  for Two ways ANOVA because Stats model 
+# doesnt have it. https://www.kaggle.com/code/alexmaszanski/two-way-anova-with-python#kln-55
+def eta_squared(aov):
+    aov['eta_sq'] = 'NaN'
+    aov['eta_sq'] = aov[:-1]['sum_sq']/sum(aov['sum_sq'])
+    return aov
+def omega_squared(aov):
+    mse = aov['sum_sq'][-1]/aov['df'][-1]
+    aov['omega_sq'] = 'NaN'
+    aov['omega_sq'] = (aov[:-1]['sum_sq']-(aov[:-1]['df']*mse))/(sum(aov['sum_sq'])+mse)
+    return aov
+```
+
+```{python}
+
+warnings.filterwarnings('ignore', message='Series.__getitem__')
+
+# Import data
+data = pd.read_csv("../../DB/20231108_rawData_salaries.csv")
+
+# Recode Countries
+map_country_name = {
+    'AD':'Andorra', 'AR':'Argentina','AU':'Australia'
+    ,'BR':'Brazil','CA':'Canada','CF':'Central African Republic'
+    ,'CH':'Switzerland','CO':'Colombia','DE':'Germany'
+    ,'EC':'Ecuador','EE':'Estonia','ES':'Spain'
+    ,'FR':'France','GB':'United Kingdom','GR':'Greece'
+    ,'HK':'Hong Kong','HR':'Croatia','IE':'Ireland'
+    ,'IN':'India','IT':'Italy','LV':'Latvia'
+    ,'MX':'Mexico','NL':'Netherlands','NO':'Norway'
+    ,'PH':'Philippines','PL':'Poland','PT':'Portugal'
+    ,'RO':'Romania','SE':'Sweden','SI':'Slovenia'
+    ,'TH':'Thailand','US':'United States'
+
+}
+
+map_continent_name = {
+    'AD':'Europe','AR':'South America','AU':'Asia-Pacific'
+    ,'BR':'South America','CA':'North America','CF':'Central Africa'
+    ,'CH':'Europe','CO':'South America','DE':'Europe'
+    ,'EC':'South America','EE':'Europe','ES':'Europe'
+    ,'FR':'Europe','GB':'Europe','GR':'Europe'
+    ,'HK':'Shouteast Asia','HR':'Europe','IE':'Europe'
+    ,'IN':'Asia-Pacific','IT':'Europe','LV':'Europe'
+    ,'MX':'North America','NL':'Europe','NO':'Europe'
+    ,'PH':'Asia-Pacific','PL':'Europe','PT':'Europe'
+    ,'RO':'Europe','SE':'Europe','SI':'Europe'
+    ,'TH':'Asia-Pacific','US':'North America'
+
+}
+data = data.assign(company_country_name = data.company_location.map(map_country_name))
+data = data.assign(company_continent_name = data.company_location.map(map_continent_name))
+
+# Only 2023
+current_year = data['work_year'].max()
+data_current = data[data['work_year'] == current_year]
+
+```
+
+```{python}
+Markdown(f"This report aims to provide a general vision about the current situation of work. Most of the information of the dataset used was obtained on {current_year}. However, information from previous years was used in order to obtain a historical view.")
+```
+
+```{python}
+#| echo: false
+# Number of cases by year
+df_count_year = data.groupby('work_year').size().reset_index(name='count')
+user_current = df_count_year.iloc[3,1]
+user_current = '{:,}'.format(user_current)
+
+df_count_year.set_index("work_year", inplace=True)
+df_count_year.index.name = None
+df_count_year.columns.name = None
+
+
+display(Markdown(f"The table bellow (@tbl-user-by-year) shows the number of user with information in all fields split by year. For year ({current_year}) a total of  {user_current} participated in the analysis."))
+
+```
+
+
+```{python}
+#| label: tbl-user-by-year
+#| tbl-cap: "Users by year"
+#| tbl-cap-location: top
+
+Markdown(tabulate(
+  df_count_year,
+  headers=["Year","Count of cases"],
+  colalign=('left', 'center')
+))
+
+```
+
+
+```{python}
+job_count = data_current['job_title'].value_counts().head(10).reset_index()
+
+job_count.set_index("job_title", inplace=True)
+job_count.index.name = None
+job_count.columns.name = None
+
+first_job = job_count.index[0]
+second_job = job_count.index[1]
+third_job = job_count.index[2]
+
+display(Markdown(f"Different jobs were assease in this study. The table bellow (@tbl-user-by-job) shows the ten most popular jobs in {current_year}. The most common was {first_job} follow by {second_job} and {third_job}. This report will be focus in this jobs, with a different section for each one."))
+
+```
+
+
+
+```{python}
+#| label: tbl-user-by-job
+#| tbl-cap: "Users by year"
+#| tbl-cap-location: top
+
+display(Markdown(tabulate(
+  job_count,
+  headers=["Job","Count of cases"],
+  colalign=('left', 'center')
+)))
+```
+
+# 2. COMPARATION BETWEEN POPULAR JOBS
+
+```{python}
+
+display(Markdown(f"In this section we are going to explore the differences between {first_job}, {second_job} and {third_job}. We focus in differences related with experience level, the salary and the ratio on remote work. As we said previously, this analysis are focus in the data obtained in {current_year} we the exception of the remote work that contains a visualization of the evolution among years."))
+```
+
+## A. Experience level
+
+The experience level was divided in four categories:  
+  - Entry-level or junior  
+  - Mid-level or intermediate  
+  - Senior-level or expert  
+  - Executive-level or director  
+
+
+
+```{python, fig.show = 'hold'}
+#| layout-nrow: 1
+#| label: fig-job-experience
+#| fig-cap: "Users by job and experience level"
+
+
+
+# Experience level
+data_top = data_current[(data_current["job_title"] == first_job) | (data_current["job_title"] == second_job) | (data_current["job_title"] == third_job)]
+df_experience_total = data_top.groupby(["job_title", "experience_level"]).size().reset_index(name='count')
+
+# PLOT
+
+#making space for the annotation
+df_experience_total = (df_experience_total.pivot(index = "job_title",columns = "experience_level",  values = "count"))
+cat =  ["EN", "MI", "EX","SE"]
+
+
+# Colors
+color = ['#996633', '#336699', '#627545', '#e7c787']
+color_edge = ['#7E562F','#1A4570','#455133','#D5B676']
+
+# Legend
+legend_labels = [
+    "Junior" if (x == "EN")
+    else "Intermediate" if (x == "MI")
+    else "Expert" if(x == "EX")
+    else "Director" if(x == "SE")
+    else "Other"
+    for x in cat
+    ]
+
+# Plot
+plt.rcParams["figure.figsize"] = (4,3)
+plt.rcParams.update({'font.size': 8})
+
+pl_job_exp = df_experience_total.plot(y = cat,
+                                      kind = "bar",
+                                      rot=0,
+                                      color = color,
+                                      edgecolor = color_edge, 
+                                      linewidth = 1.5,
+                                      label = legend_labels)
+
+pl_job_exp.set_xlabel("")
+pl_job_exp.set_ylabel("Count of users")
+
+
+# Edgecolor for each experience level
+for container, edge_color in zip(pl_job_exp.containers, color_edge):
+    for bar in container.patches:
+        bar.set_edgecolor(edge_color)
+
+ymin, ymax = pl_job_exp.get_ylim()
+pl_job_exp.set_ylim(ymin, 1.05 * ymax)
+
+
+# Annottion
+##connecting bar series with df columns
+for cont, col in zip(pl_job_exp.containers, cat):
+   #connecting each bar of the series with its absolute and relative values 
+    for rect, vals, in zip(cont.patches, df_experience_total[col]):
+        #annotating each bar
+        pl_job_exp.annotate(f"{vals}", 
+                            xy = (rect.get_x() + rect.get_width() / 2., rect.get_height()),
+                     ha='center', va='center', fontsize=7, color='black', 
+                     xytext=(-0.8, 10),
+                     textcoords='offset points')   
+
+                     #LEGEND
+pl_job_exp.legend(
+                  title= "Experience level",
+                  loc = "lower center",
+                  bbox_to_anchor=(0.5, -0.3), 
+                  ncol=len(legend_labels),
+                  labels=legend_labels,
+                  fontsize = 'small')
+                  
+# Edgecolor for each experience level legend
+for container, edge_color in zip(pl_job_exp.containers, color_edge):
+    for bar, label in zip(container.patches, legend_labels):
+        if label in plt.gca().get_legend().get_texts()[0].get_text():
+            bar.set_edgecolor(edge_color)
+
+plt.rcParams["figure.figsize"] = plt.rcParamsDefault["figure.figsize"]
+
+```
+
+
+```{python, fig.show = 'hold'}
+#| label: tbl-user-by-job-experience-count-perc
+#| tbl-cap: "Users by job and experience level"
+#| tbl-cap-location: top
+
+
+######################################
+df_experience_total = data_top.groupby(["job_title", "experience_level"]).size().reset_index(name='count')
+total_counts = df_experience_total.groupby('job_title')['count'].transform('sum')
+# Calculate percentage within each group
+df_experience_total['percentage'] = (df_experience_total['count'] / total_counts)
+
+# Function to convert decimal percentages to percentage string format
+def format_percentage(x):
+    return '{:.0%}'.format(x)
+
+# Columns with percentage data
+percentage_columns = ['percentage']
+
+# Apply formatting to percentage columns
+for col in percentage_columns:
+    df_experience_total[col] = df_experience_total[col].apply(format_percentage)
+
+df_experience_total = (df_experience_total.pivot(index ="job_title",columns = "experience_level",  values = ["count", "percentage"]))
+
+
+data_exp_job = {
+    'job_title': ['Data Analyst', 'Data Engineer', 'Data Scientist'],
+    'EN_N': df_experience_total.loc[['Data Analyst', 'Data Engineer', 'Data Scientist'], ('count', 'EN')],
+    'EN_%': df_experience_total.loc[['Data Analyst', 'Data Engineer', 'Data Scientist'], ('percentage', 'EN')],
+    'MI_N': df_experience_total.loc[['Data Analyst', 'Data Engineer', 'Data Scientist'], ('count', 'MI')],
+    'MI_%': df_experience_total.loc[['Data Analyst', 'Data Engineer', 'Data Scientist'], ('percentage', 'MI')],
+    'SE_N': df_experience_total.loc[['Data Analyst', 'Data Engineer', 'Data Scientist'], ('count', 'SE')],
+    'SE_%': df_experience_total.loc[['Data Analyst', 'Data Engineer', 'Data Scientist'], ('percentage', 'SE')],
+    'EX_N': df_experience_total.loc[['Data Analyst', 'Data Engineer', 'Data Scientist'], ('count', 'EX')],
+    'EX_%': df_experience_total.loc[['Data Analyst', 'Data Engineer', 'Data Scientist'], ('percentage', 'EX')],}
+
+df_exp_job_table = pd.DataFrame(data_exp_job)
+df_exp_job_final = pd.DataFrame()
+df_exp_job_final['Junior'] = df_exp_job_table['EN_N'].astype(str) + ' (' + df_exp_job_table['EN_%'].astype(str) + ')'
+df_exp_job_final['Intermediate'] = df_exp_job_table['MI_N'].astype(str) + ' (' + df_exp_job_table['MI_%'].astype(str) + ')'
+df_exp_job_final['Expert'] = df_exp_job_table['SE_N'].astype(str) + ' (' + df_exp_job_table['SE_%'].astype(str) + ')'
+df_exp_job_final['Director'] = df_exp_job_table['EX_N'].astype(str) + ' (' + df_exp_job_table['EX_%'].astype(str) + ')'
+
+df_exp_job_final.index = data_exp_job['job_title']
+
+t = df_exp_job_final.to_html(classes='my_table', table_id='my_id', render_links=True)
+ 
+# Define CSS to modify font size
+css = """
+<style>
+.my_table {
+    font-size: 12px;
+}
+</style>
+"""
+
+# Combine CSS and HTML table
+styled_exp_job_table = css + t
+display(HTML(styled_exp_job_table))
+
+
+```
+
+
+
+## B. Salary
+
+The database used to this report contain information from different countries around the world. Each country use their own currency. For this reason, we need to transform each one in a standar salary. The original database contains a column with this transformation, *"salary_in_usd"*. As documentation says, "this column displays the salary converted into US dollars (USD)." 
+
+
+
+```{python}
+
+data_salary_job_descriptives = data_top.groupby('job_title')['salary_in_usd'].describe()
+data_salary_job_median = data_top.groupby('job_title')['salary_in_usd'].median() #Median
+
+data_salary_job_descriptives = result = pd.merge(data_salary_job_descriptives, data_salary_job_median, on='job_title')
+data_salary_job_descriptives.rename(columns={'salary_in_usd': 'Median',
+                                             'count': 'Count',
+                                             'min': 'Min',
+                                             'max': 'Max',
+                                             'mean': 'Mean',
+                                             'std': 'Standard Deviation'}, inplace=True)
+
+data_salary_job_descriptives = data_salary_job_descriptives.reindex(columns=["Count", "Min","Max","Median", "Mean","Standard Deviation"])
+
+# Rename index
+data_salary_job_descriptives.index.name = 'Job'
+
+# Round
+
+
+
+
+job_max_salary = data_salary_job_descriptives['Mean'].idxmax()
+max_salary = data_salary_job_descriptives['Mean'].max().round(0).astype(int)
+max_salary = '{:,}'.format(max_salary)
+
+
+```
+
+```{python}
+
+
+
+display(Markdown(f"The table bellow (@tbl-descriptives-job-salary) shows the descriptives for the salary for each job. The distribution of the salary is similr on the three jobs been the {job_max_salary} the job with the highest wage with a mean of {max_salary} USD."))
+
+
+
+```
+
+
+
+```{python}
+#| label: tbl-descriptives-job-salary
+#| tbl-cap: "Descriptives of Salary for each job"
+#| tbl-cap-location: top
+
+display(Markdown(tabulate(
+  data_salary_job_descriptives,
+  headers='keys',
+  colalign=('left', *['center']* 6),
+  floatfmt=('.0f','.0f','.0f','.0f','.0f','.2f','.3f')
+))
+)
+```
+
+ 
+```{python}
+countries_EU = data_top.loc[(data_top['company_continent_name']== 'Europe')]['company_country_name'].unique()
+countries_EU = ', '.join(countries_EU).replace("'", "")
+countries_EU = countries_EU[::-1].replace(',', ' and'[::-1], 1)[::-1]
+
+cases_EU = data_top['company_continent_name'] == 'Europe'
+N_EU = cases_EU.sum()
+N_EU = '{:,}'.format(N_EU)
+
+countries_AM = data_top.loc[(data_top['company_continent_name']== 'North America')]['company_country_name'].unique()
+countries_AM = ', '.join(countries_AM).replace("'", "")
+countries_AM = countries_AM[::-1].replace(',', ' and'[::-1], 1)[::-1]
+
+cases_AM = data_top['company_continent_name'] == 'North America'
+N_AM = cases_AM.sum()
+N_AM = '{:,}'.format(N_AM)
+
+display(Markdown(f"However, it could be more interesting compare the salary in relation with the continent where the company is situated. For this question we are going to focus in two continent:\n\n* **North America**: The countries found in our database are {countries_AM}. A total of {N_AM} surveyed users works for companies in Europe.\n\n* **Europe**: The countries found in our database are {countries_EU}. A total of {N_EU} surveyed users works for companies in Europe."))
+
+```
+
+```{python}
+# Data for anova text (pictures and table was display before the text about ANOVA results. 
+
+# Prepare data for the plot
+data_salary_job_continents = data_top.loc[(data_top['company_continent_name']== 'Europe') | (data_top['company_continent_name']== 'North America')]
+data_salary_job_continents_mean = data_top.groupby(['company_continent_name', 'job_title'])['salary_in_usd'].agg(['mean', 'std'])
+data_salary_job_continents_mean = pd.DataFrame(data_salary_job_continents_mean).reset_index(drop = False)
+data_salary_job_2continents_mean = data_salary_job_continents_mean.loc[(data_salary_job_continents_mean['company_continent_name']== 'Europe') | (data_salary_job_continents_mean['company_continent_name']== 'North America')]
+
+# Prepare data for the table
+
+
+
+# Statsmodels
+formula = 'salary_in_usd ~ C(job_title) + C(company_continent_name) + C(job_title):C(company_continent_name)'
+model = ols(formula, data_salary_job_continents).fit()
+res_anova_two_raw = anova_lm(model, typ = 2)
+
+# We add to the table the effect sizes (eta and omega)
+eta_squared(res_anova_two_raw)
+#omega_squared(res_anova_two)
+
+# Rename index and columns
+res_anova_two = res_anova_two_raw.rename(index={'C(job_title)': 'Job',
+                                            'C(company_continent_name)': 'Continent',
+                                            'C(job_title):C(company_continent_name)':'Job * Contienent',
+                                            'Residual': 'Residual'
+                                            })
+
+res_anova_two = res_anova_two.rename(columns={'sum_sq': 'SS',
+                                            'df': 'df',
+                                            'F':'F',
+                                            'PR(>F)': 'p-value',
+                                            'eta_sq': 'η²'
+                                            })
+
+# Different round for each column
+
+def p_format(value):
+    if isinstance(value, str):
+        return value
+    elif value < 0.001:
+        return '<0.001'
+    else:
+        return round(value, 3)
+
+res_anova_two['SS'] = res_anova_two['SS'].apply(lambda x: '{:.3e}'.format(x))
+res_anova_two['F'] = res_anova_two['F'].round(3)
+res_anova_two['p-value'] = res_anova_two['p-value'].apply(p_format)
+res_anova_two['η²'] = res_anova_two['η²'].round(3)
+
+
+# Post hoc test. We need to do one by one
+jobs = pairwise_tukeyhsd(data_salary_job_continents['salary_in_usd'], data_salary_job_continents['job_title'], alpha=0.05)
+continents = pairwise_tukeyhsd(data_salary_job_continents['salary_in_usd'], data_salary_job_continents['company_continent_name'], alpha=0.05)
+
+t_jobsEU = data_top.loc[(data_top['company_continent_name']== 'Europe')]
+jobsEU = pairwise_tukeyhsd(t_jobsEU['salary_in_usd'], t_jobsEU['job_title'], alpha=0.05)
+
+t_jobsAN = data_top.loc[(data_top['company_continent_name']== 'North America')]
+jobsAN = pairwise_tukeyhsd(t_jobsAN['salary_in_usd'], t_jobsAN['job_title'], alpha=0.05)
+
+### For the text
+text_continents = pd.DataFrame(data=continents._results_table.data[1:], columns=continents._results_table.data[0])
+dif_continents = text_continents["meandiff"][0]
+dif_continents_text = "a difference" if dif_continents > 30000 else "not a big difference"
+
+#
+def jobs_diff_text (value1, value2, value3):
+    if value1 >= 30000 and value2 >= 30000 and value3 >= 30000:
+        return "differences between the three jobs"
+    elif value1 < 30000 and value2 < 30000 and value3 < 30000:
+        return "no big differences between the jobs"
+    else:
+        return "some differences between the jobs"
+
+
+text_EU_Jobs = pd.DataFrame(data=jobsEU._results_table.data[1:], columns=jobsEU._results_table.data[0])
+dif_EU_DA_DE = text_EU_Jobs["meandiff"][0]
+dif_EU_DA_DS = text_EU_Jobs["meandiff"][1]
+dif_EU_DE_DS = text_EU_Jobs["meandiff"][2]
+dif_EU_jobs = jobs_diff_text(dif_EU_DA_DE,dif_EU_DA_DS,dif_EU_DE_DS)
+job_max_salary_EU = t_jobsEU.groupby("job_title")["salary_in_usd"].mean().idxmax()
+job_min_salary_EU = t_jobsEU.groupby("job_title")["salary_in_usd"].mean().idxmin()
+
+text_AN_Jobs = pd.DataFrame(data=jobsAN._results_table.data[1:], columns=jobsAN._results_table.data[0])
+dif_AN_DA_DE = text_AN_Jobs["meandiff"][0]
+dif_AN_DA_DS = text_AN_Jobs["meandiff"][1]
+dif_AN_DE_DS = text_AN_Jobs["meandiff"][2]
+dif_AN_jobs = jobs_diff_text(dif_AN_DA_DE,dif_AN_DA_DS,dif_AN_DE_DS)
+job_max_salary_AN = t_jobsAN.groupby("job_title")["salary_in_usd"].mean().idxmax()
+job_min_salary_AN = t_jobsAN.groupby("job_title")["salary_in_usd"].mean().idxmin()
+
+def ANOVA_diff_text (a, b, c):
+    if a >= 0.01 and b >= 0.01 and c >= 0.01:
+        return "there are no differences between jobs, continents nor in the interaction of both variables"
+    elif a < 0.01 and b < 0.01 and c < 0.01:
+        return "there are differences between jobs, continents and in the interaction of both variables"
+
+    elif a < 0.01 and b < 0.01 and c >= 0.01:
+        return "there are differences between jobs and continents but there are not interaction effects"
+    elif a >= 0.01 and b >= 0.01 and c < 0.01:
+        return "there are no differences between jobs and between continents but the effect of the interaction is significative"
+
+    elif a < 0.01 and b >=0.01 and c < 0.01:
+        return "there are differences between jobs but not between continents. The interaction of both variables was significative"
+    elif a >= 0.01 and b < 0.01 and c >= 0.01:
+        return "there are only differences between continents"       
+
+    elif a >=  0.01 and b < 0.01 and c < 0.01:
+        return "there are differences between continents but not between jobs. The interaction of both variables was significative"
+    elif a < 0.01 and b >=  0.01 and c >=  0.01:
+        return "there are differences between jobs"   
+                                         
+    else:
+        return "REVIEW THE SINTAXIS"
+
+
+text_anova_two = res_anova_two_raw
+dif_anova_two_job = text_anova_two["PR(>F)"][0]
+dif_anova_two_continent = text_anova_two["PR(>F)"][1]
+dif_anova_two_interaction = text_anova_two["PR(>F)"][2]
+dif_AN_jobs = ANOVA_diff_text(dif_anova_two_job, dif_anova_two_continent, dif_anova_two_interaction)
+
+def eta_effect(x):
+  if x < 0.01:
+    return "small"
+  elif x >= 0.01 and x <0.06:
+    return "moderate"
+  else:
+    return "big"
+
+res_anova_two_big_eta_var = res_anova_two["η²"].idxmax()
+res_anova_two_big_eta_value = res_anova_two["η²"].max()
+res_anova_two_big_eta_text = eta_effect(res_anova_two_big_eta_value)
+```
+
+
+```{python}
+display(Markdown(f"To check if there are differences on the salary depending on the job and the countrie, a two ways ANOVA was conducted.\n\nLooking in @fig-job-continent-salary we can see that there is {dif_continents_text} between the salaries in Europe and North America. If we focus in Europe there are {dif_EU_jobs} been the largest difference between {job_max_salary_EU} and {job_min_salary_EU} salaries. In North America, there are {dif_AN_jobs} been the largest difference between {job_max_salary_AN} and {job_min_salary_AN}.The results in tbl-ANOVA2-job-continent-salary shows that {dif_AN_jobs}. {res_anova_two_big_eta_var} is the component on the model that explains better the differences been the effect {res_anova_two_big_eta_text} to explain the differences in salaries."))
+
+```
+
+
+
+
+```{python, fig.show = 'hold'}
+#| layout-nrow: 1
+#| label: fig-job-continent-salary
+#| fig-cap: "Users by job and continent"
+
+# PLOT 
+color = ['#D58476', '#769ED5', '#4F945E']
+
+plt.rcParams["figure.figsize"] = (4,3)
+plt.rcParams.update({'font.size': 12})
+plt.figure(figsize=(8, 6))
+
+sns.pointplot(
+    x='company_continent_name',
+    y='mean',
+    palette = color,
+    hue='job_title',
+    data=data_salary_job_2continents_mean,
+    dodge=True,  # Separate the points for better visibility
+)
+
+# Adjust parameters related with axis, title and legend
+plt.xlabel('Continent', fontsize=12)
+plt.ylabel('Mean Salary in USD', fontsize=12)
+#plt.title('Mean Salary for Job in Europe and North America', fontsize=14)
+plt.legend(bbox_to_anchor=(0, 1), 
+           loc='upper left',
+           fontsize = 11)  # Adjust legend position
+
+# Thousand separator
+def format_thousands(x, pos):
+    return '{:,.0f}K'.format(x / 1000)
+
+formatter = FuncFormatter(format_thousands)
+plt.gca().yaxis.set_major_formatter(formatter)
+
+#plt.rcParams["figure.figsize"] = plt.rcParamsDefault["figure.figsize"]
+
+plt.tight_layout()
+plt.show()
+
+```
+
+
+
+
+```{python}
+#| label: tbl-ANOVA2-job-continent-salary
+#| tbl-cap: "ANOVA results. Differences in Salary for Jobs in Europe and North America"
+#| tbl-cap-location: top
+
+warnings.filterwarnings('ignore', message='Series.__getitem__')
+
+t_res_anova_two = res_anova_two.to_html(classes='my_table', table_id='my_id', render_links=True)
+
+#print(jobs.summary())
+#print(continents.summary())
+
+# Define CSS to modify font size
+css = """
+<style>
+.my_table {
+    font-size: 12px;
+}
+</style>
+"""
+
+# Combine CSS and HTML table
+t_res_anova_two = css + t_res_anova_two
+display(HTML(t_res_anova_two))
+
+
+```
+
+
+
+## C. Remote work
+
+In this section we analyze the variable remote work that is defined as the amount of work done remotely. A worker could be classified in one of these three categories:
+
+- **No remote work**
+- **Partial remote**. When less than 20% of the job is remote.
+- **Fully remote**. When more than 80% of the job is remote.
+
+
+```{python}
+# Necessary data
+warnings.filterwarnings('ignore', message='Series.__getitem__')
+
+### Remote work along the years
+data_years_remote = data.loc[:,("work_year", "remote_ratio")]
+
+# Recode names remote_ratio
+data_years_remote["remote_ratio"] = data_years_remote.loc[:,("remote_ratio")].replace({
+          0: "No remote work",
+          50: "Partial remote work",
+          100: "Fully remote work"
+})
+
+data_years_remote_count = data_years_remote.groupby(["work_year", "remote_ratio"]).size().reset_index(name='Count')
+
+total_count = data_years_remote_count.groupby('work_year')['Count'].transform('sum')
+data_years_remote_count['Percentage'] = (data_years_remote_count['Count'] / total_count) * 100
+
+#Order
+cat_type = CategoricalDtype(categories=["No remote work", "Partial remote work", "Fully remote work"], ordered=True)
+data_years_remote_count['remote_ratio'] = data_years_remote_count['remote_ratio'].astype(cat_type)
+
+```
+
+```{python}
+# Data for the text
+data_2020_text = data_years_remote_count[data_years_remote_count['work_year'] == 2020]
+data_2023_text = data_years_remote_count[data_years_remote_count['work_year'] == 2023]
+
+# Order for year
+data_2020_sort_text = data_2020_text.sort_values(by = "Count", ascending=False)
+
+data_2020_max_text = data_2020_sort_text.values[0,1]
+data_2020_mid_text = data_2020_sort_text.values[1,1]
+data_2020_min_text = data_2020_sort_text.values[2,1]
+
+data_2023_sort_text = data_2023_text.sort_values(by = "Count", ascending=False)
+
+data_2023_max_text = data_2023_sort_text.values[0,1]
+data_2023_mid_text = data_2023_sort_text.values[1,1]
+data_2023_min_text = data_2023_sort_text.values[2,1]
+
+
+### Remote work along the years
+```
+
+```{python}
+Markdown(f"First of all, we are goin to focus in the evolution along the years. 2020 was a crucial year in the evolution of the evolution of jobs. Now is interesting know how is going this tendence. As we can see in @fig-year-remote and @tbl-year_remote. In 2020, the most frequent option of work was {data_2020_max_text} follow by {data_2020_mid_text} and {data_2020_min_text}. If we look this tendence in {current_year} we can see that the most frequent option is {data_2023_max_text}  follow by {data_2023_mid_text} and {data_2023_min_text}")
+```
+
+
+
+```{python, fig.show = 'hold'}
+#| layout-nrow: 1
+#| label: fig-year-remote
+#| fig-cap: "Evolution remote work along the years"
+#| 
+
+warnings.filterwarnings('ignore', message='Series.__getitem__')
+
+
+# PLOT 
+color = ['#D58476', '#769ED5', '#4F945E']
+
+plt.rcParams["figure.figsize"] = (4,3)
+plt.rcParams.update({'font.size': 12})
+plt.figure(figsize=(8, 6))
+
+sns.pointplot(
+    x='work_year',
+    y='Percentage',
+    palette = color,
+    hue='remote_ratio',
+    data=data_years_remote_count,
+    dodge=True,  # Separate the points for better visibility
+)
+
+# Adjust parameters related with axis, title and legend
+plt.xlabel('Year', fontsize=12)
+plt.ylabel('Percentage', fontsize=12)
+plt.title('Evolution remote work along the years', fontsize=14)
+plt.legend(bbox_to_anchor=(0, 1), 
+           loc='upper left',
+           fontsize = 11)  # Adjust legend position
+
+plt.ylim(0,100)
+
+# Format y axe has %
+formatter = FuncFormatter(lambda y, _: '{:.0%}'.format(y / 100))
+plt.gca().yaxis.set_major_formatter(formatter)
+
+
+plt.tight_layout()
+plt.show()
+
+``` 
+
+
+
+```{python}
+#| label: tbl-year_remote
+#| tbl-cap: "Remote work by year"
+#| tbl-cap-location: top
+
+# Concat to have a beautifull table
+data_years_remote_count["Count"] = data_years_remote_count["Count"].apply(lambda x: '{:,}'.format(x) if isinstance(x, (int, float)) else x)
+data_years_remote_count["Percentage"] = data_years_remote_count["Percentage"].round(0).astype(int)
+
+data_years_remote_count["Des"] = data_years_remote_count["Count"].astype(str) + ' (' + data_years_remote_count["Percentage"].astype(str) + '%)'
+
+data_years_remote_des = data_years_remote_count.pivot_table(index='work_year', columns='remote_ratio', values='Des', aggfunc='first')
+data_years_remote_des = data_years_remote_des.rename_axis(index=None, columns=None)
+
+
+t_data_years_remote_des = data_years_remote_des.to_html(classes='my_table', table_id='my_id', render_links=True)
+
+
+# Define CSS to modify font size
+css = """
+<style>
+.my_table {
+    font-size: 12px;
+}
+</style>
+"""
+
+# Combine CSS and HTML table
+t_data_years_remote_des = css + t_data_years_remote_des
+display(HTML(t_data_years_remote_des))
+
+
+```
+
+
+
+```{python}
+Markdown(f"A time series model was considered to see the evolution ")
+```
+

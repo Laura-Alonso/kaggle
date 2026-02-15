@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Job and Salary situation focus in 2023</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="report_files/libs/clipboard/clipboard.min.js"></script>
+<script src="report_files/libs/quarto-html/quarto.js"></script>
+<script src="report_files/libs/quarto-html/popper.min.js"></script>
+<script src="report_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="report_files/libs/quarto-html/anchor.min.js"></script>
+<link href="report_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="report_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="report_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-overview" id="toc-sec-overview" class="nav-link active" data-scroll-target="#sec-overview">1. OVERVIEW</a></li>
+  <li><a href="#sec-comparation-between-jobs" id="toc-sec-comparation-between-jobs" class="nav-link" data-scroll-target="#sec-comparation-between-jobs">2. COMPARATION BETWEEN POPULAR JOBS</a>
+  <ul class="collapse">
+  <li><a href="#sec-experience" id="toc-sec-experience" class="nav-link" data-scroll-target="#sec-experience">A. Experience level</a></li>
+  <li><a href="#sec-salary" id="toc-sec-salary" class="nav-link" data-scroll-target="#sec-salary">B. Salary</a></li>
+  <li><a href="#sec-remote-work" id="toc-sec-remote-work" class="nav-link" data-scroll-target="#sec-remote-work">C. Remote work</a></li>
+  </ul></li>
+  <li><a href="#sec-data-enegineer" id="toc-sec-data-enegineer" class="nav-link" data-scroll-target="#sec-data-enegineer">3. DATA ENGINEER</a>
+  <ul class="collapse">
+  <li><a href="#sec-de-world" id="toc-sec-de-world" class="nav-link" data-scroll-target="#sec-de-world">A. Distribucion around the world (emplyee_residence and company location) and company size</a></li>
+  <li><a href="#sec-de-salary" id="toc-sec-de-salary" class="nav-link" data-scroll-target="#sec-de-salary">B. Salary diferences</a></li>
+  <li><a href="#c.-differences-in-remote-work-in-2023" id="toc-c.-differences-in-remote-work-in-2023" class="nav-link" data-scroll-target="#c.-differences-in-remote-work-in-2023">C. Differences in remote work in 2023</a></li>
+  <li><a href="#d.-differences-in-employment-type" id="toc-d.-differences-in-employment-type" class="nav-link" data-scroll-target="#d.-differences-in-employment-type">D. Differences in employment type</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Job and Salary situation focus in 2023</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="sec-overview" class="level1">
+<h1>1. OVERVIEW</h1>
+<div class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="253">
+<p>This report aims to provide a general vision about the current situation of work. Most of the information of the dataset used was obtained on 2023. However, information from previous years was used in order to obtain a historical view.</p>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<p>The table bellow (<a href="#tbl-user-by-year">Table&nbsp;1</a>) shows the number of user with information in all fields split by year. For year (2023) a total of 6,647 participated in the analysis.</p>
+</div>
+</div>
+<div class="grid">
+<div class="g-col-4">
+
+</div>
+<div class="g-col-4">
+<div class="cell tbl-cap-location-top" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="255">
+<div id="tbl-user-by-year" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;1: Users by year</caption>
+<colgroup>
+<col style="width: 1%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Year</th>
+<th style="text-align: center;">Count of cases</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2020</td>
+<td style="text-align: center;">75</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2021</td>
+<td style="text-align: center;">218</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2022</td>
+<td style="text-align: center;">1651</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2023</td>
+<td style="text-align: center;">6647</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="g-col-4">
+
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<p>Different jobs were assease in this study. The table bellow (<a href="#tbl-user-by-job">Table&nbsp;2</a>) shows the ten most popular jobs in 2023. The most common was Data Engineer follow by Data Scientist and Data Analyst. This report will be focus in this jobs, with a different section for each one.</p>
+</div>
+</div>
+<div class="grid">
+<div class="g-col-2">
+
+</div>
+<div class="g-col-7">
+<div class="cell tbl-cap-location-top" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<div id="tbl-user-by-job" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;2: Users by year</caption>
+<colgroup>
+<col style="width: 4%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Job</th>
+<th style="text-align: center;">Count of cases</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Data Engineer</td>
+<td style="text-align: center;">1486</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data Scientist</td>
+<td style="text-align: center;">1343</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Data Analyst</td>
+<td style="text-align: center;">986</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Machine Learning Engineer</td>
+<td style="text-align: center;">754</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Applied Scientist</td>
+<td style="text-align: center;">234</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Research Scientist</td>
+<td style="text-align: center;">208</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Analytics Engineer</td>
+<td style="text-align: center;">173</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data Architect</td>
+<td style="text-align: center;">144</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Research Engineer</td>
+<td style="text-align: center;">125</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data Manager</td>
+<td style="text-align: center;">123</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="g-col-3">
+
+</div>
+</div>
+</section>
+<section id="sec-comparation-between-jobs" class="level1">
+<h1>2. COMPARATION BETWEEN POPULAR JOBS</h1>
+<div class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<p>In this section we are going to explore the differences between Data Engineer, Data Scientist and Data Analyst. We focus in differences related with experience level, the salary and the ratio on remote work. As we said previously, this analysis are focus in the data obtained in 2023 we the exception of the remote work that contains a visualization of the evolution among years.</p>
+</div>
+</div>
+<section id="sec-experience" class="level2">
+<h2 class="anchored" data-anchor-id="sec-experience">A. Experience level</h2>
+<p>The experience level was divided in four categories:<br>
+- Entry-level or junior<br>
+- Mid-level or intermediate<br>
+- Senior-level or expert<br>
+- Executive-level or director</p>
+<div class="grid">
+<div class="g-col-6">
+<div class="cell quarto-layout-panel" data-execution_count="9">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-job-experience" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="report_files/figure-html/fig-job-experience-output-1.png" class="img-fluid figure-img" width="374"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Users by job and experience level</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="g-col-6">
+<div class="cell tbl-cap-location-top" data-execution_count="10">
+<div class="cell-output cell-output-display">
+
+
+<style>
+.my_table {
+    font-size: 12px;
+}
+</style>
+
+<div id="tbl-user-by-job-experience-count-perc" class="anchored">
+<table id="my_id" class="dataframe my_table table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<caption>Table&nbsp;3: Users by job and experience level</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Junior</th>
+<th data-quarto-table-cell-role="th">Intermediate</th>
+<th data-quarto-table-cell-role="th">Expert</th>
+<th data-quarto-table-cell-role="th">Director</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Data Analyst</td>
+<td>74 (8%)</td>
+<td>245 (25%)</td>
+<td>659 (67%)</td>
+<td>8 (1%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Data Engineer</td>
+<td>59 (4%)</td>
+<td>287 (19%)</td>
+<td>1058 (71%)</td>
+<td>82 (6%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Data Scientist</td>
+<td>41 (3%)</td>
+<td>181 (13%)</td>
+<td>1094 (81%)</td>
+<td>27 (2%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-salary" class="level2">
+<h2 class="anchored" data-anchor-id="sec-salary">B. Salary</h2>
+<p>The database used to this report contain information from different countries around the world. Each country use their own currency. For this reason, we need to transform each one in a standar salary. The original database contains a column with this transformation, <em>“salary_in_usd”</em>. As documentation says, “this column displays the salary converted into US dollars (USD).”</p>
+<div class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<p>The table bellow (<a href="#tbl-descriptives-job-salary">Table&nbsp;4</a>) shows the descriptives for the salary for each job. The distribution of the salary is similr on the three jobs been the Data Scientist the job with the highest wage with a mean of 165,162 USD.</p>
+</div>
+</div>
+<div class="grid">
+<div class="g-col-1">
+
+</div>
+<div class="g-col-10">
+<div class="cell tbl-cap-location-top" data-execution_count="13">
+<div class="cell-output cell-output-display">
+<div id="tbl-descriptives-job-salary" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;4: Descriptives of Salary for each job</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Job</th>
+<th style="text-align: center;">Count</th>
+<th style="text-align: center;">Min</th>
+<th style="text-align: center;">Max</th>
+<th style="text-align: center;">Median</th>
+<th style="text-align: center;">Mean</th>
+<th style="text-align: center;">Standard Deviation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Data Analyst</td>
+<td style="text-align: center;">986</td>
+<td style="text-align: center;">15680</td>
+<td style="text-align: center;">385000</td>
+<td style="text-align: center;">105750</td>
+<td style="text-align: center;">110901.31</td>
+<td style="text-align: center;">43221.618</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data Engineer</td>
+<td style="text-align: center;">1486</td>
+<td style="text-align: center;">17025</td>
+<td style="text-align: center;">385000</td>
+<td style="text-align: center;">144000</td>
+<td style="text-align: center;">150461.12</td>
+<td style="text-align: center;">56985.127</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Data Scientist</td>
+<td style="text-align: center;">1343</td>
+<td style="text-align: center;">16000</td>
+<td style="text-align: center;">370000</td>
+<td style="text-align: center;">160000</td>
+<td style="text-align: center;">165162.43</td>
+<td style="text-align: center;">59993.145</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="g-col-1">
+
+</div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="cell-output cell-output-display">
+<p>However, it could be more interesting compare the salary in relation with the continent where the company is situated. For this question we are going to focus in two continent:</p>
+<ul>
+<li><p><strong>North America</strong>: The countries found in our database are United States, Canada and Mexico. A total of 3,494 surveyed users works for companies in Europe.</p></li>
+<li><p><strong>Europe</strong>: The countries found in our database are United Kingdom, France, Slovenia, Spain, Greece, Portugal, Latvia, Germany, Poland, Estonia, Italy, Netherlands, Sweden, Andorra, Norway, Ireland, Switzerland, Croatia and Romania. A total of 288 surveyed users works for companies in Europe.</p></li>
+</ul>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="cell-output cell-output-display">
+<p>To check if there are differences on the salary depending on the job and the countrie, a two ways ANOVA was conducted.</p>
+<p>Looking in <a href="#fig-job-continent-salary">Figure&nbsp;2</a> we can see that there is a difference between the salaries in Europe and North America. If we focus in Europe there are no big differences between the jobs been the largest difference between Data Scientist and Data Analyst salaries. In North America, there are there are differences between jobs, continents and in the interaction of both variables been the largest difference between Data Scientist and Data Analyst.The results in tbl-ANOVA2-job-continent-salary shows that there are differences between jobs, continents and in the interaction of both variables. Job is the component on the model that explains better the differences been the effect big to explain the differences in salaries.</p>
+</div>
+</div>
+<div class="grid">
+<div class="g-col-6">
+<div class="cell quarto-layout-panel" data-execution_count="17">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-job-continent-salary" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="report_files/figure-html/fig-job-continent-salary-output-1.png" class="img-fluid figure-img" width="753"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Users by job and continent</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="g-col-6">
+<div class="cell tbl-cap-location-top" data-execution_count="18">
+<div class="cell-output cell-output-display">
+
+
+<style>
+.my_table {
+    font-size: 12px;
+}
+</style>
+
+<div id="tbl-anova2-job-continent-salary" class="anchored">
+<table id="my_id" class="dataframe my_table table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<caption>Table&nbsp;5: ANOVA results. Differences in Salary for Jobs in Europe and North America</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SS</th>
+<th data-quarto-table-cell-role="th">df</th>
+<th data-quarto-table-cell-role="th">F</th>
+<th data-quarto-table-cell-role="th">p-value</th>
+<th data-quarto-table-cell-role="th">η²</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Job</td>
+<td>1.670e+12</td>
+<td>2.0</td>
+<td>314.760</td>
+<td>&lt;0.01</td>
+<td>0.130</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Continent</td>
+<td>1.071e+12</td>
+<td>1.0</td>
+<td>403.899</td>
+<td>&lt;0.01</td>
+<td>0.083</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Job * Contienent</td>
+<td>1.175e+11</td>
+<td>2.0</td>
+<td>22.141</td>
+<td>&lt;0.01</td>
+<td>0.009</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Residual</td>
+<td>1.002e+13</td>
+<td>3776.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-remote-work" class="level2">
+<h2 class="anchored" data-anchor-id="sec-remote-work">C. Remote work</h2>
+<p>In this section we analyze the variable remote work that is defined as the amount of work done remotely. A worker could be classified in one of these three categories:</p>
+<ul>
+<li><strong>No remote work</strong></li>
+<li><strong>Partial remote</strong>. When less than 20% of the job is remote.</li>
+<li><strong>Fully remote</strong>. When more than 80% of the job is remote.</li>
+</ul>
+<div class="cell" data-execution_count="21">
+<div class="cell-output cell-output-display" data-execution_count="271">
+<p>First of all, we are goin to focus in the evolution along the years. 2020 was a crucial year in the evolution of the evolution of jobs. Now is interesting know how is going this tendence. As we can see in <a href="#fig-year-remote">Figure&nbsp;3</a> and <a href="#tbl-year_remote">Table&nbsp;6</a>. In 2020, the most frequent option of work was Fully remote work follow by Partial remote work and No remote work. If we look this tendence in 2023 we can see that the most frequent option is No remote work follow by Fully remote work and Partial remote work</p>
+</div>
+</div>
+<div class="grid">
+<div class="g-col-6">
+<div class="cell quarto-layout-panel" data-execution_count="22">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-year-remote" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="report_files/figure-html/fig-year-remote-output-1.png" class="img-fluid figure-img" width="753"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Evolution remote work along the years</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="g-col-6">
+<div class="cell tbl-cap-location-top" data-execution_count="23">
+<div class="cell-output cell-output-display">
+
+
+<style>
+.my_table {
+    font-size: 12px;
+}
+</style>
+
+<div id="tbl-year_remote" class="anchored">
+<table id="my_id" class="dataframe my_table table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<caption>Table&nbsp;6: Remote work by year</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">No remote work</th>
+<th data-quarto-table-cell-role="th">Partial remote work</th>
+<th data-quarto-table-cell-role="th">Fully remote work</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2020</td>
+<td>18 (24%)</td>
+<td>21 (28%)</td>
+<td>36 (48%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021</td>
+<td>29 (13%)</td>
+<td>73 (33%)</td>
+<td>116 (53%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2022</td>
+<td>709 (43%)</td>
+<td>61 (4%)</td>
+<td>881 (53%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2023</td>
+<td>4,369 (66%)</td>
+<td>63 (1%)</td>
+<td>2,215 (33%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="27">
+<div class="cell-output cell-output-display" data-execution_count="277">
+<p>Now is interesting to know if this tendency is similar between the different jobs. For this we will focus only in the current year, 2023. In this section we are going to compare if there are differences between jobs in each option of work. Comparations between each modality of work in a specific job will be analysed in each job section.</p>
+<p>If we focus only in the work modality, the most frequent option is Partial remote work, follow by Partial remote work. The Fully remote work is the modality of work less frecuent. We can see that</p>
+<ul>
+<li><p><strong>No remote work</strong>: The are no differences between the jobs in relation with the amount of workers doing work in place.</p></li>
+<li><p><strong>Partial remote work</strong>: The are no differences between the jobs in relation with the amount of workers doing work in place.</p></li>
+<li><p><strong>Fully remote work</strong>: The are no differences between the jobs in relation with the amount of workers doing work in place.</p></li>
+</ul>
+</div>
+</div>
+<div class="grid">
+<div class="g-col-6">
+<div class="cell quarto-layout-panel" data-execution_count="28">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-job-remote" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="report_files/figure-html/fig-job-remote-output-1.png" class="img-fluid figure-img" width="397"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Users by job and remote work</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="g-col-6">
+<div class="cell tbl-cap-location-top" data-execution_count="29">
+<div class="cell-output cell-output-display">
+
+
+<style>
+.my_table {
+    font-size: 12px;
+}
+</style>
+
+<div id="tbl-job_remote" class="anchored">
+<table id="my_id" class="dataframe my_table table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<caption>Table&nbsp;7: Remote work by job</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">No remote work</th>
+<th data-quarto-table-cell-role="th">Partial remote work</th>
+<th data-quarto-table-cell-role="th">Fully remote work</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Data Analyst</td>
+<td>570 (58%)</td>
+<td>8 (1%)</td>
+<td>408 (41%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Data Engineer</td>
+<td>998 (67%)</td>
+<td>4 (0%)</td>
+<td>484 (33%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Data Scientist</td>
+<td>818 (61%)</td>
+<td>12 (1%)</td>
+<td>513 (38%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-data-enegineer" class="level1">
+<h1>3. DATA ENGINEER</h1>
+<section id="sec-de-world" class="level2">
+<h2 class="anchored" data-anchor-id="sec-de-world">A. Distribucion around the world (emplyee_residence and company location) and company size</h2>
+<div class="cell" data-execution_count="32">
+<div class="cell-output cell-output-display" data-execution_count="282">
+<p><a href="#fig-employee-residence-de">Figure&nbsp;5</a> and <a href="#fig-company-country-de">Figure&nbsp;6</a> shows the distribution of employees and companies around the world in relation with Data Engineer. As we can see, most of the employees and most of the companies are in United States. The countries where the number of employees is different from the companies are United States, Canada, Germany, Portugal, Peru, and Sweden. For more information see <a href="#tbl-countries-de">Table&nbsp;8</a>.</p>
+</div>
+</div>
+<div class="cell tbl-cap-location-top" data-execution_count="33">
+<div class="cell-output cell-output-display">
+<div id="tbl-countries-de" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;8: Residence of works and companies for Data Engineer</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Countries</th>
+<th style="text-align: center;">Employees residence</th>
+<th style="text-align: center;">Company country</th>
+<th style="text-align: left;">Countries</th>
+<th style="text-align: center;">Employees residence</th>
+<th style="text-align: center;">Company country</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">United States</td>
+<td style="text-align: center;">1340</td>
+<td style="text-align: center;">1339</td>
+<td style="text-align: left;">India</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">United Kingdom</td>
+<td style="text-align: center;">67</td>
+<td style="text-align: center;">67</td>
+<td style="text-align: left;">Italy</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: center;">26</td>
+<td style="text-align: center;">27</td>
+<td style="text-align: left;">Mexico</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Spain</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">Poland</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Colombia</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">France</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Germany</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">Peru</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Argentina</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Ireland</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Sweden</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Brazil</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="grid">
+<div class="g-col-6">
+<div class="cell quarto-layout-panel" data-execution_count="34">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-employee-residence-de" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="report_files/figure-html/fig-employee-residence-de-output-1.svg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: Employees residences around the world - Data Engineer</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="g-col-6">
+<div class="cell quarto-layout-panel" data-execution_count="35">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-company-country-de" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="report_files/figure-html/fig-company-country-de-output-1.svg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: Company countries around the world - Data Engineer</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="36">
+<div class="cell-output cell-output-display" data-execution_count="286">
+<p>In relation with the size of the companies, the classification was created based on the average of people that work in the company during the years. Three kind of companies were use:</p>
+<ul>
+<li><p><strong>Small company(S)</strong>: Less than 50 employees.</p></li>
+<li><p><strong>Medium company (M)</strong>: Between 50 and 250 employees.</p></li>
+<li><p><strong>Large company (L)</strong>: More than 250 employees.</p></li>
+</ul>
+</div>
+</div>
+<div class="cell" data-execution_count="39">
+<div class="cell-output cell-output-display" data-execution_count="289">
+<p><a href="#tbl-size-continent-de">Table&nbsp;9</a> shows the number of employees working in each type of company segmented by continent. As we can see for Asia-Pacific there is not predominant company size. In Europe the predominant company size is medium. In North America the predominant company size is medium. Finally, in South America the predominant company size is medium. As summary, most of the employees in this study works in companies of medium size. A chi-square analysis was computed to see if the differences in the number of employees working for companies of different size where significative (<a href="#tbl-size-continent-de-chi">Table&nbsp;10</a>). As a conclusion, there are differences between the number of people working in medium companies versus large and small companies but there are no differences between large and small companies.</p>
+</div>
+</div>
+<div class="grid">
+<div class="g-col-6">
+<div class="cell tbl-cap-location-top" data-execution_count="40">
+<div class="cell-output cell-output-display">
+<div id="tbl-size-continent-de" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;9: Size of companies in the different continents - Data Engineer</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Continent</th>
+<th style="text-align: center;">Large company</th>
+<th style="text-align: center;">Medium company</th>
+<th style="text-align: center;">Small company</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Asia-Pacific</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Europe</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">94</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">North America</td>
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">1337</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South America</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="g-col-6">
+<div class="cell tbl-cap-location-top" data-execution_count="41">
+<div class="cell-output cell-output-display">
+<div id="tbl-size-continent-de-chi" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;10: Chi-square test for size of companies - Data Engineer</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Chi-square</th>
+<th style="text-align: center;">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Large vs Medium</td>
+<td style="text-align: center;">26.100</td>
+<td style="text-align: center;">&lt;0.01</td>
+</tr>
+<tr class="even">
+<td>Large vs Small</td>
+<td style="text-align: center;">4.167</td>
+<td style="text-align: center;">0.244</td>
+</tr>
+<tr class="odd">
+<td>Medium vs Small</td>
+<td style="text-align: center;">14.054</td>
+<td style="text-align: center;">&lt;0.01</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-de-salary" class="level2">
+<h2 class="anchored" data-anchor-id="sec-de-salary">B. Salary diferences</h2>
+<div class="cell" data-execution_count="42">
+<div class="cell-output cell-output-display" data-execution_count="292">
+<p>As we see in the previous section <a href="#sec-salary">Section&nbsp;2.2</a> the mean salary of a Data Engineer in 2023 was 150461.1204576043. In this section we are going to analysis the differences in salary for Data Engineer in relation to the year and to the country</p>
+</div>
+</div>
+<div class="cell" data-execution_count="45">
+<div class="cell-output cell-output-display" data-execution_count="295">
+<p>First of all, we are going to check if there are differences in the mean salary between the years. <a href="#fig-year-salary-de">Figure&nbsp;7</a> contains a representation of the mean salary along the years, showing that the trend in wages is upward.</p>
+</div>
+</div>
+<div class="cell quarto-layout-panel" data-execution_count="46">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-year-salary-de" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="report_files/figure-html/fig-year-salary-de-output-1.png" class="img-fluid figure-img" width="532"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: Evolution of salary along the years - Data Engineer</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="48">
+<div class="cell-output cell-output-display" data-execution_count="298">
+<p>As we can detect some differences at first galance, an ANOVA was computed to see if that differences are real. <a href="#tbl-anova-salary-de">Table&nbsp;11</a> contain the results. The conclusion that we can extract is that there are differences in salary between jobs. It is interesting know the differences between each year. <a href="#tbl-ttest-salary-de">Table&nbsp;12</a> shows de result of T-test with the salary means for each year and the conclusion extracted. We can say that there are differences in the mean salary between consecutive years except between 2020 and 2021</p>
+</div>
+</div>
+<div class="grid">
+<div class="g-col-2">
+
+</div>
+<div class="g-col-8">
+<div class="cell tbl-cap-location-top" data-execution_count="49">
+<div class="cell-output cell-output-display">
+<div id="tbl-anova-salary-de" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;11: ANOVA results. Differences in Salary along years - Data Engineer</caption>
+<colgroup>
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">SS</th>
+<th style="text-align: center;">df</th>
+<th style="text-align: center;">F</th>
+<th style="text-align: center;">p-value</th>
+<th style="text-align: right;">η²</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Year</td>
+<td style="text-align: center;">1.552e+11</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">48.294</td>
+<td style="text-align: center;">&lt;0.01</td>
+<td style="text-align: right;">0.023</td>
+</tr>
+<tr class="even">
+<td>Residual</td>
+<td style="text-align: center;">6.497e+12</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">nan</td>
+<td style="text-align: center;">nan</td>
+<td style="text-align: right;">nan</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="g-col-2">
+
+</div>
+</div>
+<div class="cell tbl-cap-location-top" data-execution_count="50">
+<div class="cell-output cell-output-display">
+<div id="tbl-ttest-salary-de" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;12: T-test comparation salaries by year - Data Engineer</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Year A vs Year B</th>
+<th style="text-align: center;">Mean Year A</th>
+<th style="text-align: center;">Mean Year B</th>
+<th style="text-align: center;">T</th>
+<th style="text-align: center;">p-value</th>
+<th style="text-align: center;">Conclusion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2020 vs 2021</td>
+<td style="text-align: center;">85301.38</td>
+<td style="text-align: center;">96143.08</td>
+<td style="text-align: center;">-0.658</td>
+<td style="text-align: center;">0.514</td>
+<td style="text-align: center;">No differences</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2020 vs 2022</td>
+<td style="text-align: center;">85301.38</td>
+<td style="text-align: center;">139589.89</td>
+<td style="text-align: center;">-3.480</td>
+<td style="text-align: center;">&lt;0.01</td>
+<td style="text-align: center;">Diferences</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2020 vs 2023</td>
+<td style="text-align: center;">85301.38</td>
+<td style="text-align: center;">150461.12</td>
+<td style="text-align: center;">-4.112</td>
+<td style="text-align: center;">&lt;0.01</td>
+<td style="text-align: center;">Diferences</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2021 vs 2022</td>
+<td style="text-align: center;">96143.08</td>
+<td style="text-align: center;">139589.89</td>
+<td style="text-align: center;">-4.580</td>
+<td style="text-align: center;">&lt;0.01</td>
+<td style="text-align: center;">Diferences</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2021 vs 2023</td>
+<td style="text-align: center;">96143.08</td>
+<td style="text-align: center;">150461.12</td>
+<td style="text-align: center;">-5.735</td>
+<td style="text-align: center;">&lt;0.01</td>
+<td style="text-align: center;">Diferences</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2022 vs 2023</td>
+<td style="text-align: center;">139589.89</td>
+<td style="text-align: center;">150461.12</td>
+<td style="text-align: center;">-3.675</td>
+<td style="text-align: center;">&lt;0.01</td>
+<td style="text-align: center;">Diferences</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="c.-differences-in-remote-work-in-2023" class="level2">
+<h2 class="anchored" data-anchor-id="c.-differences-in-remote-work-in-2023">C. Differences in remote work in 2023</h2>
+</section>
+<section id="d.-differences-in-employment-type" class="level2">
+<h2 class="anchored" data-anchor-id="d.-differences-in-employment-type">D. Differences in employment type</h2>
+<p>PT: Part-time FT: Full-time CT: Contract FL: Freelance</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
