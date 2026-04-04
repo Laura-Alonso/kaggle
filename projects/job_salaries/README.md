@@ -1,4 +1,4 @@
-# job-salaries
+# 💼🪙 Job Salaries
 
 
 The **aim** of this project is built a report describing the current situation of work market in jobs related with data and make comparations and predictions between the three most common jobs: Data Analyst, Data Scientist and Data Engineer.

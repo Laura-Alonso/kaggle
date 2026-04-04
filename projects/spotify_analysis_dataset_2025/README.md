@@ -1,4 +1,4 @@
-# Spotify-Analysis-Dataset-2025
+# 🎵🟢 Spotify Analysis Dataset 2025
 
 This project explores Spotify user behavior to identify potential **churn patterns** (subscription cancellations).  
 It includes two main components:  
