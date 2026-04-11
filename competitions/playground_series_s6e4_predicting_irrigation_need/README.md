@@ -43,9 +43,10 @@ The notebook follows these main sections:
 4. ✂️ **Data preparation & preprocessing**. Resampling strategy.
 5. 🧠 **Modeling**.
     * **A. Model specification**.
-    * **B. Hyperparameter tuning**.
-    * **C. Evaluation & model selection**.
-6. 🚀 **Submission**.
+    * **B. Cross-validation evaluation**.
+    * **C. Compare models**.
+6. 🏆 **Final model**.     
+7. 🚀 **Submission**.
 
 📘 The full notebook is available on Kaggle:
 🔗 [Predicting Irrigation Need - R code (by Laura Alonso)](https://www.kaggle.com/code/lauraalonso/predicting-irrigation-need-r-code)
